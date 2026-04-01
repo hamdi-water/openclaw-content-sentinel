@@ -1,0 +1,43 @@
+{
+  "briefs": [
+    {
+      "brief_id": "ops-brief-01",
+      "label": "AI reliability controls for content operations",
+      "status": "promoted",
+      "priority": 10,
+      "due_at": "2026-03-28T08:00:00+01:00",
+      "enabled": true,
+      "competitor_url": "https://www.rnz.co.nz/news/national/590645/health-nz-staff-told-to-stop-using-chatgpt-to-write-clinical-notes",
+      "topic": "AI reliability controls for content operations",
+      "business_angle": "why approval packets, provenance manifests, and evidence packs reduce publishing risk in autonomous content systems",
+      "target_audience": "content operations leaders and AI automation operators",
+      "key_call_to_action": "audit the weakest approval checkpoint in your daily publishing workflow and tighten it this week",
+      "keywords": [
+        "ai reliability",
+        "approval workflows",
+        "content operations",
+        "human review",
+        "evidence pack",
+        "prompt hygiene"
+      ],
+      "targets": [
+        "linkedin",
+        "facebook",
+        "x"
+      ],
+      "do_not_say": [
+        "game changing",
+        "viral growth hack",
+        "fully autonomous without oversight"
+      ],
+      "mandatory_references": [
+        "approval gates",
+        "evidence pack",
+        "human-in-the-loop fallback",
+        "zero-cost research"
+      ],
+      "updated_at": "2026-03-28T08:51:43+00:00"
+    }
+  ],
+  "updated_at": "2026-03-28T08:51:43+00:00"
+}

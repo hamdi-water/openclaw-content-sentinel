@@ -1,0 +1,310 @@
+DEBUG: research.py loaded, has urlopen: True
+{
+  "status": "partial",
+  "overall_completion_percent": 91.46,
+  "json_path": "C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\workspace-data\\compliance\\v61-gap-tracker.json",
+  "markdown_path": "C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\workspace-data\\compliance\\v61-gap-tracker.md",
+  "report": {
+    "generated_at": "2026-03-28T11:01:00.600870+00:00",
+    "spec_version": "v6.1",
+    "overall_completion_percent": 91.46,
+    "code_completion_percent": 97.73,
+    "development_completion_percent": 97.73,
+    "proof_completion_percent": 35.0,
+    "points_earned": 91.46,
+    "points_total": 100,
+    "code_points_earned": 87.96,
+    "code_points_total": 90,
+    "development_points_earned": 87.96,
+    "proof_points_earned": 3.5,
+    "proof_points_total": 10,
+    "status": "partial",
+    "items": [
+      {
+        "id": "openclaw_runtime",
+        "title": "OpenClaw-first runtime",
+        "weight": 6,
+        "score": 1.0,
+        "points_earned": 6.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Workspace, plugin, and Telegram-aware OpenClaw runtime are wired.",
+        "evidence": [
+          "plugin_enabled=True",
+          "telegram_enabled=True",
+          "primary_model=openai-codex/gpt-5.4"
+        ]
+      },
+      {
+        "id": "scraping_and_research",
+        "title": "Competitor scraping ladder + zero-cost trend research",
+        "weight": 8,
+        "score": 1.0,
+        "points_earned": 8.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "HTTP extraction, browser fallback, and public trend adapters are active.",
+        "evidence": [
+          "article_extracted=True",
+          "trend_sources={'rss': 0, 'public_news': 12, 'pytrends': 3, 'searxng': 0}"
+        ]
+      },
+      {
+        "id": "generation_and_media",
+        "title": "Content analysis, drafting, and image generation",
+        "weight": 7,
+        "score": 1.0,
+        "points_earned": 7.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Article, platform drafts, and the visual asset are generated per run.",
+        "evidence": [
+          "2026-03-28-085201-write-an-original-operator-facing-response-artic",
+          "image_backend=procedural_local"
+        ]
+      },
+      {
+        "id": "browser_autoposting",
+        "title": "Browser auto-posting to LinkedIn, Facebook, and X",
+        "weight": 8,
+        "score": 1.0,
+        "points_earned": 8.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "At least one live run proves native posting on all three platforms.",
+        "evidence": [
+          "2026-03-28-015134-write-an-original-operator-facing-response-artic",
+          "browser_capability_status=done"
+        ]
+      },
+      {
+        "id": "telegram_scheduler_control",
+        "title": "Telegram cockpit + scheduler/heartbeat control plane",
+        "weight": 6,
+        "score": 1.0,
+        "points_earned": 6.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Telegram commands and the scheduler control plane are live.",
+        "evidence": [
+          "telegram_status=done",
+          "action_items=0"
+        ]
+      },
+      {
+        "id": "reliability_controls",
+        "title": "Retries, logs, confidence gating, and replayability",
+        "weight": 6,
+        "score": 1.0,
+        "points_earned": 6.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Run state, approval flow, and historical snapshots are recorded for replay.",
+        "evidence": [
+          "latest_history_entries=5",
+          "quality_gate_present=True"
+        ]
+      },
+      {
+        "id": "security_and_hardening",
+        "title": "Security, prompt defenses, and minimal permissions",
+        "weight": 6,
+        "score": 1.0,
+        "points_earned": 6.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Security audits and runtime controls are in place.",
+        "evidence": []
+      },
+      {
+        "id": "langgraph_rag_stack",
+        "title": "LangGraph + vector store + graph store",
+        "weight": 6,
+        "score": 0.66,
+        "points_earned": 3.96,
+        "points_remaining": 2.04,
+        "status": "partial",
+        "summary": "Hybrid memory, graph, and LangGraph orchestration are present.",
+        "evidence": [
+          "langgraph=blocked",
+          "vector=done",
+          "graph=done"
+        ]
+      },
+      {
+        "id": "sqlite_ledger",
+        "title": "Canonical SQLite run ledger",
+        "weight": 8,
+        "score": 1.0,
+        "points_earned": 8.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "SQLite ledger is active and recording run snapshots.",
+        "evidence": [
+          "db_path=C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\workspace-data\\ledger\\run_ledger.sqlite3",
+          "snapshots=869",
+          "distinct_runs=53"
+        ]
+      },
+      {
+        "id": "contracts_and_schema_versioning",
+        "title": "Canonical contracts and schema versioning",
+        "weight": 5,
+        "score": 1.0,
+        "points_earned": 5.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Contract files exist and runs carry schema metadata.",
+        "evidence": [
+          "contracts_present=True",
+          "latest_schema_attached=True",
+          "schema_version=v6.1"
+        ]
+      },
+      {
+        "id": "internal_api_facade",
+        "title": "Internal GenViral-like API facade",
+        "weight": 4,
+        "score": 1.0,
+        "points_earned": 4.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "A same-repo API facade, persisted control-plane state, and contracts are present.",
+        "evidence": [
+          "api_module=True",
+          "api_state_module=True",
+          "fastapi_available=True",
+          "contracts_present=True"
+        ]
+      },
+      {
+        "id": "observability_and_docs",
+        "title": "Observability, runbooks, and operator docs",
+        "weight": 4,
+        "score": 1.0,
+        "points_earned": 4.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Operator docs and dashboard assets are present.",
+        "evidence": [
+          "dashboard_runs=53",
+          "C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\docs\\DEPLOYMENT.md",
+          "C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\docs\\INTERNAL_API_CONTRACTS.md"
+        ]
+      },
+      {
+        "id": "promptops",
+        "title": "PromptOps registry and quality taxonomy",
+        "weight": 5,
+        "score": 1.0,
+        "points_earned": 5.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Prompt hashes, quality taxonomy, and golden-set candidates are tracked.",
+        "evidence": [
+          "unique_run_prompt_hashes=37",
+          "golden_set_count=3"
+        ]
+      },
+      {
+        "id": "ragops",
+        "title": "RAGOps manifest and shadow evaluation",
+        "weight": 5,
+        "score": 1.0,
+        "points_earned": 5.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Index manifest and basic shadow-eval queries are generated.",
+        "evidence": [
+          "vector_documents=153",
+          "shadow_queries=5"
+        ]
+      },
+      {
+        "id": "adapter_engineering",
+        "title": "Adapter engineering manifest",
+        "weight": 4,
+        "score": 1.0,
+        "points_earned": 4.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "Platform adapter contracts are materialized for all three social surfaces.",
+        "evidence": [
+          "adapter_count=3",
+          "publish_adapter_version=openclaw-browser-v1"
+        ]
+      },
+      {
+        "id": "release_train",
+        "title": "Release train and readiness gate",
+        "weight": 2,
+        "score": 1.0,
+        "points_earned": 2.0,
+        "points_remaining": 0.0,
+        "status": "done",
+        "summary": "A release readiness gate is implemented.",
+        "evidence": [
+          "readiness=hold",
+          "C:\\Users\\water\\OneDrive\\Bureau\\OpenClaw Content Sentinel\\docs\\RELEASE_TRAIN.md"
+        ]
+      },
+      {
+        "id": "proof_window_deliverables",
+        "title": "14-day/30-day proof window deliverables",
+        "weight": 10,
+        "score": 0.35,
+        "points_earned": 3.5,
+        "points_remaining": 6.5,
+        "status": "partial",
+        "summary": "Long-horizon proof is still limited by history length, not by core code.",
+        "evidence": [
+          "success_rate_14d=20.0",
+          "runs_in_last_14d=15",
+          "eligible_live_runs_30d=15"
+        ]
+      }
+    ],
+    "top_gaps": [
+      {
+        "id": "proof_window_deliverables",
+        "title": "14-day/30-day proof window deliverables",
+        "weight": 10,
+        "score": 0.35,
+        "points_earned": 3.5,
+        "points_remaining": 6.5,
+        "status": "partial",
+        "summary": "Long-horizon proof is still limited by history length, not by core code.",
+        "evidence": [
+          "success_rate_14d=20.0",
+          "runs_in_last_14d=15",
+          "eligible_live_runs_30d=15"
+        ]
+      },
+      {
+        "id": "langgraph_rag_stack",
+        "title": "LangGraph + vector store + graph store",
+        "weight": 6,
+        "score": 0.66,
+        "points_earned": 3.96,
+        "points_remaining": 2.04,
+        "status": "partial",
+        "summary": "Hybrid memory, graph, and LangGraph orchestration are present.",
+        "evidence": [
+          "langgraph=blocked",
+          "vector=done",
+          "graph=done"
+        ]
+      }
+    ],
+    "blockers": [
+      "The 14-day reliability proof target is not yet satisfied by current live run history.",
+      "The 30-day zero-cost log deliverable is not yet backed by enough eligible live run history."
+    ],
+    "runtime_snapshot": {
+      "primary_model": "openai-codex/gpt-5.4",
+      "telegram_enabled": true,
+      "sentinel_plugin_enabled": true,
+      "ledger_snapshots": 869
+    }
+  }
+}

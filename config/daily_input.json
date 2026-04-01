@@ -1,0 +1,33 @@
+{
+  "prompt": "Write an original operator-facing response article and platform-native social drafts.\nTopic: AI reliability controls for content operations\nBusiness angle: why approval packets, provenance manifests, and evidence packs reduce publishing risk in autonomous content systems\nTarget audience: content operations leaders and AI automation operators\nKey call to action: audit the weakest approval checkpoint in your daily publishing workflow and tighten it this week\nDo not say: game changing; viral growth hack; fully autonomous without oversight\nMandatory references: approval gates; evidence pack; human-in-the-loop fallback; zero-cost research",
+  "competitor_url": "https://www.rnz.co.nz/news/national/590645/health-nz-staff-told-to-stop-using-chatgpt-to-write-clinical-notes",
+  "keywords": [
+    "ai reliability",
+    "approval workflows",
+    "content operations",
+    "human review",
+    "evidence pack",
+    "prompt hygiene"
+  ],
+  "targets": [
+    "linkedin",
+    "facebook",
+    "x"
+  ],
+  "topic": "AI reliability controls for content operations",
+  "business_angle": "why approval packets, provenance manifests, and evidence packs reduce publishing risk in autonomous content systems",
+  "target_audience": "content operations leaders and AI automation operators",
+  "key_call_to_action": "audit the weakest approval checkpoint in your daily publishing workflow and tighten it this week",
+  "do_not_say": [
+    "game changing",
+    "viral growth hack",
+    "fully autonomous without oversight"
+  ],
+  "mandatory_references": [
+    "approval gates",
+    "evidence pack",
+    "human-in-the-loop fallback",
+    "zero-cost research"
+  ],
+  "updated_at": "2026-03-28T08:51:43+00:00"
+}

@@ -1,0 +1,48 @@
+# HELP sentinel_runs_total Total number of pipeline executions
+# TYPE sentinel_runs_total counter
+sentinel_runs_total{status="test_started",trigger="unit_test"} 1.0
+# HELP sentinel_runs_created Total number of pipeline executions
+# TYPE sentinel_runs_created gauge
+sentinel_runs_created{status="test_started",trigger="unit_test"} 1.7748025204645796e+09
+# HELP sentinel_pipeline_duration_seconds Time taken to complete a full run
+# TYPE sentinel_pipeline_duration_seconds histogram
+sentinel_pipeline_duration_seconds_bucket{le="0.005"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.01"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.025"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.05"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.075"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.1"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.25"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.5"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="0.75"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="1.0"} 0.0
+sentinel_pipeline_duration_seconds_bucket{le="2.5"} 1.0
+sentinel_pipeline_duration_seconds_bucket{le="5.0"} 1.0
+sentinel_pipeline_duration_seconds_bucket{le="7.5"} 1.0
+sentinel_pipeline_duration_seconds_bucket{le="10.0"} 1.0
+sentinel_pipeline_duration_seconds_bucket{le="+Inf"} 1.0
+sentinel_pipeline_duration_seconds_count 1.0
+sentinel_pipeline_duration_seconds_sum 1.23
+# HELP sentinel_pipeline_duration_seconds_created Time taken to complete a full run
+# TYPE sentinel_pipeline_duration_seconds_created gauge
+sentinel_pipeline_duration_seconds_created 1.7748025181591287e+09
+# HELP sentinel_rag_groundedness_failures_total Total number of groundedness check failures
+# TYPE sentinel_rag_groundedness_failures_total counter
+sentinel_rag_groundedness_failures_total 1.0
+# HELP sentinel_rag_groundedness_failures_created Total number of groundedness check failures
+# TYPE sentinel_rag_groundedness_failures_created gauge
+sentinel_rag_groundedness_failures_created 1.7748025181591878e+09
+# HELP sentinel_rag_hits_total Total successful RAG retrievals
+# TYPE sentinel_rag_hits_total counter
+sentinel_rag_hits_total 1.0
+# HELP sentinel_rag_hits_created Total successful RAG retrievals
+# TYPE sentinel_rag_hits_created gauge
+sentinel_rag_hits_created 1.774802518159199e+09
+# HELP sentinel_scraping_errors_total Total browser or HTTP scraping failures
+# TYPE sentinel_scraping_errors_total counter
+sentinel_scraping_errors_total{error_type="TestError",source="test_source"} 1.0
+# HELP sentinel_scraping_errors_created Total browser or HTTP scraping failures
+# TYPE sentinel_scraping_errors_created gauge
+sentinel_scraping_errors_created{error_type="TestError",source="test_source"} 1.774802520464618e+09
+# HELP sentinel_incidents_total Total unexpected system incidents
+# TYPE sentinel_incidents_total counter

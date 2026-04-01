@@ -1,0 +1,48 @@
+{
+  "id": "sentinel-ops",
+  "name": "Sentinel Ops",
+  "description": "Deterministic Telegram and operator commands for OpenClaw Content Sentinel.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "workspaceDir": {
+        "type": "string",
+        "minLength": 1
+      },
+      "pythonPath": {
+        "type": "string",
+        "default": "python"
+      },
+      "cliModule": {
+        "type": "string",
+        "default": "openclaw_content_sentinel.cli"
+      },
+      "promptFile": {
+        "type": "string"
+      },
+      "defaultTargets": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": ["linkedin", "facebook", "x"]
+      }
+    }
+  },
+  "uiHints": {
+    "workspaceDir": {
+      "label": "Workspace Directory",
+      "placeholder": "/srv/openclaw-content-sentinel"
+    },
+    "pythonPath": {
+      "label": "Python Path",
+      "placeholder": "python"
+    },
+    "promptFile": {
+      "label": "Default Prompt File",
+      "placeholder": "/srv/openclaw-content-sentinel/config/daily_prompt_template.md"
+    }
+  }
+}

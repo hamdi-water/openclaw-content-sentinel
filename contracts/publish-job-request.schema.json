@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw-content-sentinel.local/contracts/publish-job-request.schema.json",
+  "title": "PublishJobRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id"],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["linkedin", "facebook", "x"]
+      },
+      "default": ["linkedin", "facebook", "x"]
+    },
+    "submit": {
+      "type": "boolean",
+      "default": true
+    },
+    "continue_on_error": {
+      "type": "boolean",
+      "default": true
+    },
+    "retries": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 1
+    },
+    "idempotency_key": {
+      "type": "string"
+    },
+    "candidate_ref": {
+      "type": "string"
+    },
+    "approval_ref": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "string",
+      "default": "v6.1"
+    }
+  }
+}

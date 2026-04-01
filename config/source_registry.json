@@ -1,0 +1,54 @@
+{
+  "sources": [
+    {
+      "source_id": "rss_public_feeds",
+      "type": "rss",
+      "domains": [],
+      "acquisition": "rss",
+      "priority": 10,
+      "legal_notes": "Public feed; prefer canonical URL and attribution."
+    },
+    {
+      "source_id": "google_news_rss",
+      "type": "public_news",
+      "domains": [
+        "news.google.com"
+      ],
+      "acquisition": "rss",
+      "priority": 9,
+      "legal_notes": "Use as trend discovery only; always resolve to publisher source before summarizing."
+    },
+    {
+      "source_id": "searxng_public_search",
+      "type": "searxng",
+      "domains": [],
+      "acquisition": "search",
+      "priority": 7,
+      "legal_notes": "Public search discovery only; fetch original source for content analysis."
+    },
+    {
+      "source_id": "pytrends_google_trends",
+      "type": "pytrends",
+      "domains": [],
+      "acquisition": "pytrends",
+      "priority": 8,
+      "legal_notes": "Trend signal only; not a content source."
+    },
+    {
+      "source_id": "html_direct_competitor",
+      "type": "html",
+      "domains": [],
+      "acquisition": "http_direct",
+      "priority": 10,
+      "legal_notes": "Public page extraction only; respect robots/paywalls and attribute public sources."
+    },
+    {
+      "source_id": "browser_fallback_competitor",
+      "type": "browser_fallback",
+      "domains": [],
+      "acquisition": "openclaw_browser",
+      "priority": 6,
+      "legal_notes": "Use only when direct HTML is weak or JS-rendered; stop on access controls or challenges."
+    }
+  ]
+}

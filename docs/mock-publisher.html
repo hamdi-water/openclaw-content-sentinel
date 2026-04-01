@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OpenClaw Mock Publisher</title>
+  <style>
+    :root {
+      --bg: radial-gradient(circle at top, #d9f3ff 0%, #a8c8ff 35%, #0f1e3c 100%);
+      --glass: rgba(255,255,255,.18);
+      --border: rgba(255,255,255,.28);
+      --ink: #eef7ff;
+      --muted: rgba(238,247,255,.76);
+      --accent: #7df0da;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .shell {
+      width: min(920px, 100%);
+      padding: 28px;
+      border-radius: 28px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    p { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .card {
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(9,18,36,.28);
+    }
+    label {
+      display: block;
+      font-size: .95rem;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    textarea, input, button {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 14px 16px;
+      font: inherit;
+    }
+    textarea, input {
+      background: rgba(255,255,255,.1);
+      color: var(--ink);
+    }
+    textarea { min-height: 220px; resize: vertical; }
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    button {
+      background: linear-gradient(135deg, rgba(125,240,218,.95), rgba(102,193,255,.95));
+      color: #08233b;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .success {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(125,240,218,.12);
+      border: 1px solid rgba(125,240,218,.4);
+      display: none;
+    }
+    .success.visible { display: block; }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <h1 id="title">Mock Publisher</h1>
+    <p id="subtitle">Use this local page to validate OpenClaw browser posting logic without touching real social networks.</p>
+    <div class="grid">
+      <section class="card">
+        <label for="composer" id="composer-label">Post text</label>
+        <textarea id="composer" aria-label="Post text" placeholder="Write your post"></textarea>
+        <div class="actions">
+          <label for="media">Image upload</label>
+          <input id="media" type="file" aria-label="Upload image">
+          <button id="submit" type="button">Post</button>
+        </div>
+        <div id="success" class="success">Post published successfully.</div>
+      </section>
+      <aside class="card">
+        <strong>How to use</strong>
+        <p>Open this file through a local server, then point `OPENCLAW_SENTINEL_PUBLISH_URL_*` at the desired mock URL to validate `browser-publish` end to end.</p>
+        <p id="platform-readout">Platform: linkedin</p>
+        <p id="url-readout"></p>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const platform = (params.get("platform") || "linkedin").toLowerCase();
+    const labels = {
+      linkedin: {
+        title: "LinkedIn Mock Publisher",
+        subtitle: "Simulates the LinkedIn compose surface for browser automation validation.",
+        composer: "Post text",
+        placeholder: "Start a post about industry insight",
+        button: "Post"
+      },
+      facebook: {
+        title: "Facebook Mock Publisher",
+        subtitle: "Simulates the Facebook composer for browser automation validation.",
+        composer: "What's on your mind?",
+        placeholder: "Write something to your audience",
+        button: "Post"
+      },
+      x: {
+        title: "X Mock Publisher",
+        subtitle: "Simulates the X composer for browser automation validation.",
+        composer: "What's happening?",
+        placeholder: "Compose post",
+        button: "Post"
+      }
+    };
+    const current = labels[platform] || labels.linkedin;
+    document.getElementById("title").textContent = current.title;
+    document.getElementById("subtitle").textContent = current.subtitle;
+    document.getElementById("composer-label").textContent = current.composer;
+    document.getElementById("composer").setAttribute("aria-label", current.composer);
+    document.getElementById("composer").setAttribute("placeholder", current.placeholder);
+    document.getElementById("submit").textContent = current.button;
+    document.getElementById("platform-readout").textContent = `Platform: ${platform}`;
+    document.getElementById("url-readout").textContent = window.location.href;
+    document.getElementById("submit").addEventListener("click", () => {
+      document.getElementById("success").classList.add("visible");
+      history.pushState({}, "", `/mock/${platform}/success`);
+    });
+  </script>
+</body>
+</html>

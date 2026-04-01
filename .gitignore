@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+workspace-data/
+tmp_*.txt
+tmp_*.json
+tmp_*.png
+tmp_*
+~$*.docx
+
+Cahier_des_charges_OpenClaw_Content_Sentinel_v6_1_ultra_advanced_revised.pdf
+
+Cahier_des_charges_OpenClaw_Content_Sentinel_v6_1_ultra_advanced_revised.pdf

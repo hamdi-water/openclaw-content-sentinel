@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw-content-sentinel.local/contracts/run-create-request.schema.json",
+  "title": "RunCreateRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["competitor_url"],
+  "properties": {
+    "prompt": {
+      "type": "string"
+    },
+    "competitor_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["linkedin", "facebook", "x"]
+      },
+      "default": ["linkedin", "facebook", "x"]
+    },
+    "execute_pipeline": {
+      "type": "boolean",
+      "default": true
+    },
+    "send_telegram_preview": {
+      "type": "boolean",
+      "default": true
+    },
+    "ignore_pause": {
+      "type": "boolean",
+      "default": false
+    },
+    "schema_version": {
+      "type": "string",
+      "default": "v6.1"
+    }
+  }
+}

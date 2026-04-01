@@ -1,0 +1,403 @@
+openapi: 3.1.0
+info:
+  title: OpenClaw Content Sentinel Internal API
+  version: "v1"
+  description: |
+    Internal GenViral-like control-plane facade for OpenClaw Content Sentinel.
+    OpenClaw remains the runtime and operator plane. This API exposes stable
+    objects for runs, drafts, assets, candidates, approvals, publish jobs,
+    proofs, schedules, and analytics.
+servers:
+  - url: http://127.0.0.1:8787
+paths:
+  /v1/projects:
+    get:
+      summary: List internal projects
+      operationId: listProjects
+      responses:
+        "200":
+          description: Project list
+    post:
+      summary: Create a project
+      operationId: createProject
+      responses:
+        "200":
+          description: Project created
+  /v1/brand-profiles:
+    get:
+      summary: List brand profiles
+      operationId: listBrandProfiles
+      responses:
+        "200":
+          description: Brand profile list
+    post:
+      summary: Create or upsert a brand profile
+      operationId: createBrandProfile
+      responses:
+        "200":
+          description: Brand profile persisted
+  /v1/brand-profiles/{profile_id}:
+    patch:
+      summary: Update one brand profile
+      operationId: patchBrandProfile
+      parameters:
+        - in: path
+          name: profile_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Brand profile updated
+  /v1/campaigns:
+    get:
+      summary: List campaign definitions
+      operationId: listCampaigns
+      responses:
+        "200":
+          description: Campaign list
+    post:
+      summary: Create a campaign
+      operationId: createCampaign
+      responses:
+        "200":
+          description: Campaign persisted
+  /v1/campaigns/{campaign_id}:
+    patch:
+      summary: Patch a campaign
+      operationId: patchCampaign
+      parameters:
+        - in: path
+          name: campaign_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Campaign updated
+  /v1/templates:
+    get:
+      summary: List media templates
+      operationId: listTemplates
+      responses:
+        "200":
+          description: Template list
+    post:
+      summary: Create or upsert a template
+      operationId: createTemplate
+      responses:
+        "200":
+          description: Template persisted
+  /v1/templates/{template_id}:
+    patch:
+      summary: Patch one media template
+      operationId: patchTemplate
+      parameters:
+        - in: path
+          name: template_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Template updated
+  /v1/sources:
+    get:
+      summary: Read the source registry
+      operationId: listSources
+      responses:
+        "200":
+          description: Source registry
+    post:
+      summary: Add a source registry entry
+      operationId: createSource
+      responses:
+        "200":
+          description: Source created
+  /v1/sources/{source_id}:
+    patch:
+      summary: Patch a source registry entry
+      operationId: patchSource
+      parameters:
+        - in: path
+          name: source_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Source updated
+  /v1/sources/ingest:
+    post:
+      summary: Trigger targeted source ingestion
+      operationId: ingestSource
+      responses:
+        "200":
+          description: Source ingestion payload
+  /v1/runs:
+    post:
+      summary: Create a manual or API-triggered run
+      operationId: createRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./run-create-request.schema.json
+      responses:
+        "200":
+          description: Run created
+          content:
+            application/json:
+              schema:
+                $ref: ./run-record.schema.json
+    get:
+      summary: List recent runs
+      operationId: listRuns
+      responses:
+        "200":
+          description: Recent run list
+  /v1/runs/{run_id}:
+    get:
+      summary: Read the canonical run record
+      operationId: getRun
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Canonical run record
+          content:
+            application/json:
+              schema:
+                $ref: ./run-record.schema.json
+  /v1/candidates:
+    get:
+      summary: List candidate posts
+      operationId: listCandidates
+      responses:
+        "200":
+          description: Candidate list
+    post:
+      summary: Materialize a candidate post from a run
+      operationId: createCandidate
+      responses:
+        "200":
+          description: Candidate created
+  /v1/approvals:
+    post:
+      summary: Persist a human approval decision
+      operationId: createApproval
+      responses:
+        "200":
+          description: Approval recorded
+  /v1/runs/{run_id}/approve:
+    post:
+      summary: Approve a run and optionally auto-publish
+      operationId: approveRun
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated run state
+  /v1/runs/{run_id}/revise:
+    post:
+      summary: Reject a run and request revision
+      operationId: reviseRun
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated run state
+  /v1/drafts/{run_id}:
+    get:
+      summary: Read generated drafts for a run
+      operationId: getDrafts
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Draft contents by platform
+    patch:
+      summary: Patch one or more drafts and optionally refresh review
+      operationId: patchDrafts
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Drafts updated
+  /v1/assets/{run_id}:
+    get:
+      summary: List generated assets for a run
+      operationId: listAssets
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Asset list
+  /v1/assets/{run_id}/{asset_path}:
+    get:
+      summary: Download one asset from the run directory
+      operationId: getAsset
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: asset_path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Asset file
+  /v1/render-jobs:
+    post:
+      summary: Launch or replay a render job
+      operationId: createRenderJob
+      responses:
+        "200":
+          description: Render job accepted or reused
+    get:
+      summary: List render jobs
+      operationId: listRenderJobs
+      responses:
+        "200":
+          description: Render job list
+  /v1/render-jobs/{render_job_id}:
+    get:
+      summary: Read one render job
+      operationId: getRenderJob
+      parameters:
+        - in: path
+          name: render_job_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Render job payload
+  /v1/publish-jobs:
+    post:
+      summary: Create or replay publish jobs
+      operationId: createPublishJob
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./publish-job-request.schema.json
+      responses:
+        "200":
+          description: Publish jobs accepted or reused
+    get:
+      summary: List publish jobs
+      operationId: listPublishJobs
+      responses:
+        "200":
+          description: Publish job list
+  /v1/publish-jobs/{job_id}:
+    get:
+      summary: Read one publish job
+      operationId: getPublishJob
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Publish job payload
+  /v1/proofs/{run_id}:
+    get:
+      summary: Read the proof pack for a run
+      operationId: getProofs
+      parameters:
+        - in: path
+          name: run_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Proof pack and identity hashes
+  /v1/replays:
+    post:
+      summary: Trigger a bounded replay over safe internal stages
+      operationId: createReplay
+      responses:
+        "200":
+          description: Replay result
+  /v1/schedules:
+    get:
+      summary: Read scheduler and brief readiness
+      operationId: getSchedules
+      responses:
+        "200":
+          description: Scheduler health and active brief readiness
+    patch:
+      summary: Patch desired scheduler/operator state
+      operationId: patchSchedules
+      responses:
+        "200":
+          description: Desired schedule state updated
+  /v1/analytics:
+    get:
+      summary: Read dashboard, compliance, and recent API audit log
+      operationId: getAnalytics
+      responses:
+        "200":
+          description: Analytics payload
+  /v1/analytics/snapshots:
+    get:
+      summary: Read persisted analytics snapshots
+      operationId: listAnalyticsSnapshots
+      responses:
+        "200":
+          description: Analytics snapshot list
+  /v1/events:
+    get:
+      summary: Read persisted internal events
+      operationId: listEvents
+      responses:
+        "200":
+          description: Internal event list
+  /v1/webhooks/test:
+    post:
+      summary: Test webhook connectivity
+      operationId: testWebhook
+      responses:
+        "200":
+          description: Echo response

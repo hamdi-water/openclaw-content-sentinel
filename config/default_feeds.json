@@ -1,0 +1,9 @@
+{
+  "feeds": [
+    "https://news.ycombinator.com/rss",
+    "https://feeds.feedburner.com/oreilly/radar",
+    "https://www.theverge.com/rss/index.xml",
+    "https://techcrunch.com/feed/",
+    "https://www.wired.com/feed/rss"
+  ]
+}

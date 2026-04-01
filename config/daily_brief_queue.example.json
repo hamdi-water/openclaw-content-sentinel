@@ -1,0 +1,27 @@
+{
+  "briefs": [
+    {
+      "brief_id": "ops-brief-01",
+      "label": "AI reliability controls for content operations",
+      "status": "ready",
+      "priority": 10,
+      "due_at": "2026-03-27T08:00:00+00:00",
+      "enabled": true,
+      "competitor_url": "https://www.rnz.co.nz/news/national/590645/health-nz-staff-told-to-stop-using-chatgpt-to-write-clinical-notes",
+      "topic": "AI reliability controls",
+      "business_angle": "why approval packets and evidence packs reduce publishing risk",
+      "target_audience": "content operations leaders",
+      "key_call_to_action": "audit the weakest approval checkpoint in the publishing workflow",
+      "do_not_say": [
+        "game changing",
+        "viral growth hack"
+      ],
+      "mandatory_references": [
+        "approval gates",
+        "evidence pack",
+        "zero-cost research"
+      ]
+    }
+  ],
+  "updated_at": "2026-03-26T16:00:00+00:00"
+}

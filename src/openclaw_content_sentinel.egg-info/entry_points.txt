@@ -1,0 +1,2 @@
+[console_scripts]
+ocs = openclaw_content_sentinel.cli:main

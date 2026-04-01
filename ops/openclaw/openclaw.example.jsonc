@@ -1,0 +1,59 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/srv/openclaw-content-sentinel",
+      "repoRoot": "/srv/openclaw-content-sentinel"
+    }
+  },
+  "plugins": {
+    "load": {
+      "paths": [
+        "/srv/openclaw-content-sentinel/plugins/sentinel-ops"
+      ]
+    },
+    "entries": {
+      "sentinel-ops": {
+        "enabled": true,
+        "config": {
+          "workspaceDir": "/srv/openclaw-content-sentinel",
+          "pythonPath": "python3",
+          "cliModule": "openclaw_content_sentinel.cli",
+          "promptFile": "/srv/openclaw-content-sentinel/config/daily_prompt_template.md",
+          "defaultTargets": ["linkedin", "facebook", "x"]
+        }
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "<fill-me>",
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "<telegram-user-id>"
+      ],
+      "commands": {
+        "native": true
+      },
+      "customCommands": [
+        { "command": "ocs-security", "description": "Audit local security" },
+        { "command": "ocs-compliance", "description": "Show compliance gaps" },
+        { "command": "ocs-runtime", "description": "Inspect runtime config" },
+        { "command": "ocs-scheduler", "description": "Audit scheduler health" },
+        { "command": "ocs-browser-health", "description": "Check browser profiles" },
+        { "command": "ocs-doctor", "description": "Check workspace readiness" },
+        { "command": "ocs-dashboard", "description": "Show dashboard summary" },
+        { "command": "ocs-status", "description": "Show recent runs" },
+        { "command": "ocs-run-now", "description": "Trigger a new run" },
+        { "command": "ocs-approve", "description": "Approve a run" },
+        { "command": "ocs-reject", "description": "Reject a run" },
+        { "command": "ocs-logs", "description": "Show run logs" },
+        { "command": "ocs-pause", "description": "Pause automation" },
+        { "command": "ocs-resume", "description": "Resume automation" },
+        { "command": "ocs-stage-publish", "description": "Prepare publish metadata" },
+        { "command": "ocs-publish", "description": "Run browser publish" },
+        { "command": "ocs-retry", "description": "Retry a failed publish" }
+      ]
+    }
+  }
+}

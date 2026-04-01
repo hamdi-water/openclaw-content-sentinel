@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw-content-sentinel.local/contracts/run-record.schema.json",
+  "title": "RunRecord",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "run_id",
+    "created_at",
+    "updated_at",
+    "prompt",
+    "competitor_url",
+    "status",
+    "approval_state",
+    "schema_version",
+    "publish_adapter_version",
+    "prompt_bundle_version",
+    "retrieval_policy_version",
+    "scoring_policy_version",
+    "approval_policy",
+    "trigger_kind"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "prompt": { "type": "string" },
+    "competitor_url": { "type": "string" },
+    "status": { "type": "string" },
+    "approval_state": { "type": "string" },
+    "confidence": { "type": ["number", "null"] },
+    "schema_version": { "type": "string" },
+    "publish_adapter_version": { "type": "string" },
+    "prompt_bundle_version": { "type": "string" },
+    "retrieval_policy_version": { "type": "string" },
+    "scoring_policy_version": { "type": "string" },
+    "approval_policy": { "type": "string" },
+    "trigger_kind": { "type": "string" },
+    "platform_targets": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "identity": { "type": "object" },
+    "proof_pack": { "type": "object" },
+    "analysis": { "type": "object" },
+    "quality_gate": { "type": "object" },
+    "cost_proof": { "type": "object" },
+    "post_results": { "type": "object" }
+  }
+}

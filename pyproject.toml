@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openclaw-content-sentinel"
+version = "0.1.0"
+description = "OpenClaw-first workspace and helper CLI for autonomous daily content research, drafting, approval, and posting."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name = "Hamdi Zayen" }
+]
+license = { text = "Proprietary" }
+dependencies = [
+  "pillow>=12.0",
+  "prometheus-client>=0.19.0",
+  "pydantic>=2.10.0"
+]
+
+[project.optional-dependencies]
+html = ["beautifulsoup4>=4.12"]
+research = ["pytrends>=4.9"]
+graph = ["langgraph>=0.2.60", "langchain-core>=0.3.0", "neo4j>=5.26"]
+vector = ["chromadb>=0.5", "numpy>=1.26", "faiss-cpu>=1.8; python_version < '3.14'"]
+publishers = ["playwright>=1.52"]
+api = ["fastapi>=0.116", "uvicorn>=0.35"]
+dev = ["pytest>=8.3", "mypy>=1.19.1", "ruff>=0.15.0"]
+
+[project.scripts]
+ocs = "openclaw_content_sentinel.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["openclaw_content_sentinel*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+filterwarnings = [
+    "error",
+    "ignore:.*iscoroutinefunction.*:DeprecationWarning",
+    "ignore:.*starlette.*:DeprecationWarning",
+    "ignore:.*pydantic.*:DeprecationWarning",
+    "ignore:.*pydantic.*:UserWarning",
+    "ignore:.*fastapi.*:DeprecationWarning",
+    "ignore:.*anyio.*:DeprecationWarning"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "tmp",
+    "workspace-data",
+    "scripts",
+    "local_test_runner.py",
+    "stress_test_ocs.py",
+    "tmp_heartbeat_check.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "S", "UP", "W", "C90", "N", "D", "ANN", "T20"]
+ignore = [
+    "D100", "D101", "D102", "D103", "D104", "D107", # Docstring requirements (too noisy for now)
+    "S101", # Use of assert
+    "D203", "D212", # Incompatible docstring rules
+    "B008", # Function call in argument defaults (FastAPI Depends)
+    "ANN401", # Dynamically typed expressions (Any is fine in some cases)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/openclaw_content_sentinel/cli.py" = ["T201"]
+"src/openclaw_content_sentinel/browser_automation.py" = ["S603"]
+"scripts/*.py" = ["T201", "S", "ANN", "D", "C901"]
+"tests/*.py" = ["S101", "ANN", "D", "E501", "S106", "S110"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src/openclaw_content_sentinel"]
+ignore_missing_imports = false
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_return_any = false
+disallow_untyped_defs = false
+check_untyped_defs = false
+disallow_untyped_calls = false
+disallow_incomplete_defs = false
+disallow_subclassing_any = false
+no_implicit_optional = false
+strict_optional = true
+implicit_reexport = true
+disable_error_code = [
+    "arg-type",
+    "assignment",
+    "attr-defined",
+    "call-arg",
+    "call-overload",
+    "index",
+    "misc",
+    "type-arg",
+    "unused-ignore",
+    "valid-type",
+    "var-annotated",
+]
+exclude = '(^tmp/|^workspace-data/|^scripts/|^local_test_runner\.py$|^stress_test_ocs\.py$|^tmp_heartbeat_check\.py$)'
+
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".venv"]
+skips = ["B101"] # assert used in tests/logic (handled by ruff)

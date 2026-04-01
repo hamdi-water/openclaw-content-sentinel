@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw Content Sentinel | Guide d'utilisation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/zod@3.23.8/lib/index.umd.js"></script>
+  <style>
+    :root {
+      --bg-1: #061423;
+      --bg-2: #0c2239;
+      --bg-3: #102f4d;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-strong: rgba(255, 255, 255, 0.16);
+      --glass-line: rgba(255, 255, 255, 0.24);
+      --text: #eff7ff;
+      --muted: #b7cbe0;
+      --accent: #64d9ff;
+      --accent-warm: #ffd27a;
+      --success: #74f1c0;
+      --danger: #ff8a8a;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(100, 217, 255, 0.24), transparent 0 28%),
+        radial-gradient(circle at 88% 18%, rgba(255, 210, 122, 0.22), transparent 0 22%),
+        radial-gradient(circle at 78% 82%, rgba(116, 241, 192, 0.16), transparent 0 18%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 42rem;
+      height: 42rem;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+      animation: floatGlow 18s ease-in-out infinite;
+    }
+
+    body::before {
+      top: -10rem;
+      left: -10rem;
+      background: rgba(100, 217, 255, 0.16);
+    }
+
+    body::after {
+      right: -8rem;
+      bottom: -12rem;
+      background: rgba(255, 210, 122, 0.14);
+      animation-delay: -7s;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(1.5rem, -1rem, 0) scale(1.05); }
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 4rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.4rem;
+      border: 1px solid var(--glass-line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      font-family: "Sora", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.44), rgba(255,255,255,0.08)),
+        linear-gradient(135deg, rgba(100,217,255,0.55), rgba(255,210,122,0.3));
+      border: 1px solid rgba(255,255,255,0.35);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.35), 0 12px 32px rgba(0,0,0,0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .nav a,
+    .pill {
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav a:hover,
+    .pill:hover,
+    button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.26);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 1.3rem;
+      align-items: stretch;
+      margin-bottom: 1.3rem;
+    }
+
+    .panel {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--glass-line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)),
+        rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(255,255,255,0.18), transparent 42%);
+      pointer-events: none;
+    }
+
+    .hero-copy,
+    .hero-side,
+    .section,
+    .validator-card {
+      padding: 1.6rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Sora", sans-serif;
+      line-height: 1.06;
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: clamp(2.7rem, 6vw, 5.25rem);
+      max-width: 10ch;
+    }
+
+    .lead {
+      margin: 1rem 0 1.3rem;
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions,
+    .badge-row,
+    .command-actions,
+    .validator-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .badge-row {
+      margin-top: 1rem;
+    }
+
+    .badge {
+      padding: 0.65rem 0.85rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .hero-grid,
+    .flow-grid,
+    .command-grid,
+    .validator-grid,
+    .notes-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 1.4rem;
+    }
+
+    .mini-card,
+    .flow-card,
+    .command-card,
+    .note-card {
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .mini-card strong,
+    .stat strong {
+      display: block;
+      margin-bottom: 0.45rem;
+      font-family: "Sora", sans-serif;
+      font-size: 1rem;
+    }
+
+    .mini-card p,
+    .flow-card p,
+    .note-card p,
+    .hero-side p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .stat-number {
+      font-family: "Sora", sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent-warm);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      max-width: 60ch;
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section-stack {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .flow-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .flow-card {
+      min-height: 100%;
+    }
+
+    .flow-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 0.85rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(100,217,255,0.3), rgba(255,210,122,0.28));
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .command-grid,
+    .notes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .command-card pre,
+    .note-card pre,
+    .validator-card pre,
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(3, 13, 24, 0.52);
+      color: var(--text);
+      font-family: "IBM Plex Sans", monospace;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    textarea {
+      min-height: 16rem;
+      resize: vertical;
+    }
+
+    button,
+    .button-link {
+      cursor: pointer;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .button-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, rgba(100,217,255,0.22), rgba(255,210,122,0.18));
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .validator-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .validator-card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .validator-card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .result-box {
+      margin-top: 1rem;
+      min-height: 8rem;
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(2, 9, 17, 0.5);
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .result-box.ok {
+      border-color: rgba(116, 241, 192, 0.32);
+      box-shadow: inset 0 0 0 1px rgba(116, 241, 192, 0.08);
+    }
+
+    .result-box.error {
+      border-color: rgba(255, 138, 138, 0.34);
+      box-shadow: inset 0 0 0 1px rgba(255, 138, 138, 0.08);
+    }
+
+    .footer {
+      margin-top: 1.4rem;
+      padding: 1.2rem 1.4rem;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .validator-grid,
+      .flow-grid,
+      .command-grid,
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        border-radius: 28px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding-inline: 0.85rem;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-copy,
+      .hero-side,
+      .section,
+      .validator-card {
+        padding: 1.2rem;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>OpenClaw Content Sentinel</div>
+      </div>
+      <div class="nav-links">
+        <a href="#flux">Flux</a>
+        <a href="#commandes">Commandes</a>
+        <a href="#validateurs">Validateurs Zod</a>
+        <a href="#production">Production</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="panel hero-copy">
+        <div class="eyebrow">Guide operateur cristalin</div>
+        <h1>Utiliser l'app sans casser l'autonomie.</h1>
+        <p class="lead">
+          OpenClaw Content Sentinel orchestre un run quotidien complet: ingestion d'article concurrent,
+          recherche tendance zero-cost, generation de drafts originaux, image locale, validation Telegram
+          et publication navigateur sur LinkedIn, Facebook et X. Cette page sert de mode d'emploi visuel
+          et de poste de verification rapide.
+        </p>
+        <div class="hero-actions">
+          <a class="button-link button-primary" href="#validateurs">Valider la configuration</a>
+          <a class="button-link" href="#commandes">Voir les commandes</a>
+        </div>
+        <div class="hero-grid">
+          <div class="mini-card">
+            <strong>OpenClaw-first</strong>
+            <p>Le cerveau, le cron, le heartbeat, Telegram et le navigateur restent dans OpenClaw. Le repo sert de workspace, de skills et de couche de stockage.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Zero-cost research</strong>
+            <p>RSS, SearXNG public ou self-hosted, et Google Trends via pytrends quand disponible. Aucun service premium n'est requis.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Image locale</strong>
+            <p>Generation locale immediate avec social card procedurale. ComfyUI local reste compatible si tu veux un backend image plus riche.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Human-in-the-loop</strong>
+            <p>Aucune publication ne doit partir sans approbation explicite. Telegram sert a approuver, rejeter, relancer et observer les runs.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel hero-side">
+        <div class="stat">
+          <strong>Objet du projet</strong>
+          <p>Un agent de generation et de publication multi-plateforme autonome, robuste, documente et maintenable.</p>
+        </div>
+        <div class="stat">
+          <div class="stat-number">6</div>
+          <strong>capacites runtime</strong>
+          <p>Prompt + URL concurrente, trend research, synthese, image, multi-posting, pilotage Telegram.</p>
+        </div>
+        <div class="stat">
+          <div class="stat-number">0 $</div>
+          <strong>hors LLM</strong>
+          <p>Le design du projet reste compatible avec le cahier des charges: aucun cout additionnel hors cerveau LLM.</p>
+        </div>
+        <div class="badge-row">
+          <span class="badge">RSS</span>
+          <span class="badge">SearXNG</span>
+          <span class="badge">pytrends</span>
+          <span class="badge">Telegram</span>
+          <span class="badge">OpenClaw Browser</span>
+        </div>
+      </aside>
+    </section>
+
+    <section id="flux" class="panel section">
+      <div class="section-title">
+        <div>
+          <h2>Flux d'utilisation</h2>
+          <p>Le runtime nominal doit suivre exactement le cahier des charges: OpenClaw execute les etapes 1 a 4, Telegram devient l'interface de controle a l'etape 5, puis OpenClaw publie automatiquement a l'etape 6 apres approbation.</p>
+        </div>
+      </div>
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div class="flow-step">1</div>
+          <h3>Ingestion concurrente</h3>
+          <p>OpenClaw charge le brief actif, lit l'URL concurrente, scrape la page publique, nettoie le texte et produit une synthese exploitable.</p>
+        </article>
+        <article class="flow-card">
+          <div class="flow-step">2</div>
+          <h3>Recherche tendance</h3>
+          <p>Le run collecte ensuite des signaux zero-cost via RSS, pytrends, SearXNG et les flux publics utiles au sujet.</p>
+        </article>
+        <article class="flow-card">
+          <div class="flow-step">3</div>
+          <h3>Analyse + generation</h3>
+          <p>OpenClaw et le graphe LangGraph synthetisent la source, les trends, la memoire et le graphe pour produire l'article et les drafts LinkedIn, Facebook et X.</p>
+        </article>
+        <article class="flow-card">
+          <div class="flow-step">4</div>
+          <h3>Image</h3>
+          <p>L'image est generee localement, puis ajoutee au paquet d'approbation avant toute publication.</p>
+        </article>
+        <article class="flow-card">
+          <div class="flow-step">5</div>
+          <h3>Telegram natif</h3>
+          <p>Telegram est l'interface operateur complete: preview, `/status`, `/logs`, `/approve`, `/reject`, `/run-now`, et overrides temps reel.</p>
+        </article>
+        <article class="flow-card">
+          <div class="flow-step">6</div>
+          <h3>Auto-posting</h3>
+          <p>Apres `/approve`, OpenClaw ouvre les profils persistants et publie automatiquement sur LinkedIn, Facebook et X avec preuves et captures.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="commandes" class="panel section">
+      <div class="section-title">
+        <div>
+          <h2>Commandes essentielles</h2>
+          <p>Ces commandes couvrent le chemin operateur minimal, depuis la verification du setup jusqu'a la publication et au suivi des logs.</p>
+        </div>
+      </div>
+      <div class="command-grid">
+        <article class="command-card">
+          <h3>1. Verifier le setup</h3>
+          <pre id="cmd-doctor">python -m openclaw_content_sentinel.cli doctor
+python -m openclaw_content_sentinel.cli compliance-report
+python -m openclaw_content_sentinel.cli runtime-status</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-doctor">Copier</button>
+          </div>
+        </article>
+        <article class="command-card">
+          <h3>2. Preparer l'entree journaliere</h3>
+          <pre id="cmd-daily-input">python -m openclaw_content_sentinel.cli set-daily-input --prompt-file .\config\daily_prompt_template.md --competitor-url "https://www.rnz.co.nz/news/national/590645/health-nz-staff-told-to-stop-using-chatgpt-to-write-clinical-notes" --targets linkedin facebook x</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-daily-input">Copier</button>
+          </div>
+        </article>
+        <article class="command-card">
+          <h3>3. Lancer le run</h3>
+          <pre id="cmd-run">python -m openclaw_content_sentinel.cli scheduled-run</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-run">Copier</button>
+          </div>
+        </article>
+        <article class="command-card">
+          <h3>4. Suivre le run</h3>
+          <pre id="cmd-status">python -m openclaw_content_sentinel.cli status --json</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-status">Copier</button>
+          </div>
+        </article>
+        <article class="command-card">
+          <h3>5. Valider Telegram</h3>
+          <pre id="cmd-preview">/status &lt;run_id&gt;
+/logs &lt;run_id&gt;
+/approve &lt;run_id&gt;
+/reject &lt;run_id&gt;</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-preview">Copier</button>
+          </div>
+        </article>
+        <article class="command-card">
+          <h3>6. Publier ou tracer</h3>
+          <pre id="cmd-publish">/publish &lt;run_id&gt;
+python -m openclaw_content_sentinel.cli browser-publish-all --run-id "&lt;run_id&gt;" --retries 1</pre>
+          <div class="command-actions">
+            <button type="button" data-copy="cmd-publish">Copier</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="validateurs" class="panel section">
+      <div class="section-title">
+        <div>
+          <h2>Validateurs Zod</h2>
+          <p>Colle ici les JSON critiques avant mise en production. La validation est purement front-end et sert d'aide operateur rapide, pas de source de verite runtime.</p>
+        </div>
+      </div>
+      <div class="validator-grid">
+        <article class="validator-card">
+          <h3>Validateur de `daily_input.json`</h3>
+          <p>Ce bloc verifie le prompt, l'URL concurrente, les keywords et les targets supportees.</p>
+          <textarea id="daily-input-editor" spellcheck="false"></textarea>
+          <div class="validator-actions">
+            <button type="button" class="button-primary" id="daily-sample">Charger un exemple</button>
+            <button type="button" id="daily-validate">Valider</button>
+          </div>
+          <div class="result-box" id="daily-result">Aucun controle lance.</div>
+        </article>
+
+        <article class="validator-card">
+          <h3>Validateur de readiness operateur</h3>
+          <p>Ce bloc simule la checklist de production: fournisseur LLM, Telegram, profils sociaux, moteur image et recherche tendance.</p>
+          <textarea id="setup-editor" spellcheck="false"></textarea>
+          <div class="validator-actions">
+            <button type="button" class="button-primary" id="setup-sample">Charger un exemple</button>
+            <button type="button" id="setup-validate">Valider</button>
+          </div>
+          <div class="result-box" id="setup-result">Aucun controle lance.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="production" class="panel section">
+      <div class="section-title">
+        <div>
+          <h2>Rappels de production</h2>
+          <p>Ces points doivent rester vrais si tu veux que l'app corresponde au cahier des charges: fiabilite, zero cout hors LLM, securite et intervention humaine quand necessaire.</p>
+        </div>
+      </div>
+      <div class="notes-grid">
+        <article class="note-card">
+          <h3>Telegram natif</h3>
+          <pre>/security
+/compliance
+/runtime
+/scheduler
+/browser-health
+/doctor
+/status
+/run-now
+/approve &lt;run_id&gt;
+/reject &lt;run_id&gt;
+/logs &lt;run_id&gt;
+/stage-publish &lt;run_id&gt;
+/publish &lt;run_id&gt;</pre>
+        </article>
+        <article class="note-card">
+          <h3>Zero-cost stack attendu</h3>
+          <pre>LLM: OpenAI, Anthropic, Bedrock, Grok ou local
+Recherche: RSS + pytrends + SearXNG
+Image: ComfyUI local ou social card procedurale
+Posting: OpenClaw browser + profils persistants
+Scheduler: OpenClaw cron + heartbeat</pre>
+        </article>
+        <article class="note-card">
+          <h3>Chemins utiles</h3>
+          <pre>config/daily_input.json
+config/default_feeds.json
+docs/DEPLOYMENT.md
+docs/TELEGRAM_COMMANDS.md
+workspace-data/runs/&lt;run_id&gt;/
+ops/openclaw/</pre>
+        </article>
+        <article class="note-card">
+          <h3>Regles non negociables</h3>
+          <pre>- Pas de publication sans approbation
+- Pas de contournement de paywall ou CAPTCHA
+- Profils sociaux dedies et securises
+- Traitement du HTML concurrent comme donnees non fiables
+- Logs, screenshots et retries documentes</pre>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Ouvre ce fichier localement dans un navigateur pour un guide visuel, puis utilise `ocs doctor` comme point d'entree operateur. Cette page documente l'usage de l'app, elle ne remplace ni les skills OpenClaw ni les controles runtime.
+    </footer>
+  </div>
+
+  <script>
+    const zodReady = typeof window.Zod !== "undefined";
+    const { z } = window.Zod || {};
+
+    const dailySample = {
+      prompt: "# Daily Prompt Template\n\nTopic: Autonomous competitive intelligence\n\nBusiness angle: Zero-cost content operations\n\nTarget audience: founders and growth teams\n\nKey call to action: adopt an approval-first workflow",
+      competitor_url: "https://www.rnz.co.nz/news/national/590645/health-nz-staff-told-to-stop-using-chatgpt-to-write-clinical-notes",
+      keywords: ["openclaw", "competitive intelligence", "content ops"],
+      targets: ["linkedin", "facebook", "x"]
+    };
+
+    const setupSample = {
+      model_provider: "OpenAI",
+      model_name: "company-managed-model",
+      approval_required: true,
+      telegram: {
+        configured: true,
+        bot_token: "telegram-bot-token-present",
+        allowed_users: ["123456789"]
+      },
+      browser_profiles: {
+        linkedin: true,
+        facebook: true,
+        x: true
+      },
+      research: {
+        rss: true,
+        searxng: true,
+        pytrends: true
+      },
+      image_backend: "procedural_local"
+    };
+
+    function pretty(value) {
+      return JSON.stringify(value, null, 2);
+    }
+
+    function setResult(node, ok, message) {
+      node.textContent = message;
+      node.classList.remove("ok", "error");
+      node.classList.add(ok ? "ok" : "error");
+    }
+
+    function validateJson(editorId, resultId, schema) {
+      const editor = document.getElementById(editorId);
+      const result = document.getElementById(resultId);
+      try {
+        const payload = JSON.parse(editor.value);
+        const parsed = schema.safeParse(payload);
+        if (!parsed.success) {
+          const lines = parsed.error.issues.map((issue) => `- ${issue.path.join(".") || "root"}: ${issue.message}`);
+          setResult(result, false, "Validation echouee.\n" + lines.join("\n"));
+          return;
+        }
+        setResult(result, true, "Validation reussie.\n" + pretty(parsed.data));
+      } catch (error) {
+        setResult(result, false, "JSON invalide.\n" + error.message);
+      }
+    }
+
+    function uniqueTargets(values) {
+      return new Set(values).size === values.length;
+    }
+
+    if (zodReady) {
+      const targetEnum = z.enum(["linkedin", "facebook", "x"]);
+      const dailySchema = z.object({
+        prompt: z.string().min(24, "Le prompt doit contenir une vraie consigne exploitable."),
+        competitor_url: z.string().url("L'URL concurrente doit etre valide."),
+        keywords: z.array(z.string().min(2)).max(12).default([]),
+        targets: z.array(targetEnum).min(1).refine(uniqueTargets, "Les targets ne doivent pas contenir de doublons.")
+      });
+
+      const setupSchema = z.object({
+        model_provider: z.enum(["OpenAI", "Anthropic", "Bedrock", "Grok", "Local"]),
+        model_name: z.string().min(3),
+        approval_required: z.literal(true, {
+          errorMap: () => ({ message: "L'approbation doit rester obligatoire." })
+        }),
+        telegram: z.object({
+          configured: z.literal(true, {
+            errorMap: () => ({ message: "Telegram doit etre configure." })
+          }),
+          bot_token: z.string().min(10),
+          allowed_users: z.array(z.string().regex(/^\d+$/, "Les operator IDs Telegram doivent etre numeriques.")).min(1)
+        }),
+        browser_profiles: z.object({
+          linkedin: z.literal(true),
+          facebook: z.literal(true),
+          x: z.literal(true)
+        }),
+        research: z.object({
+          rss: z.literal(true),
+          searxng: z.boolean(),
+          pytrends: z.literal(true)
+        }),
+        image_backend: z.enum(["procedural_local", "comfyui_local"])
+      });
+
+      document.getElementById("daily-sample").addEventListener("click", () => {
+        document.getElementById("daily-input-editor").value = pretty(dailySample);
+      });
+      document.getElementById("setup-sample").addEventListener("click", () => {
+        document.getElementById("setup-editor").value = pretty(setupSample);
+      });
+      document.getElementById("daily-validate").addEventListener("click", () => {
+        validateJson("daily-input-editor", "daily-result", dailySchema);
+      });
+      document.getElementById("setup-validate").addEventListener("click", () => {
+        validateJson("setup-editor", "setup-result", setupSchema);
+      });
+    } else {
+      const message = "La librairie Zod n'a pas pu etre chargee. Verifie ta connexion reseau avant d'utiliser les validateurs.";
+      setResult(document.getElementById("daily-result"), false, message);
+      setResult(document.getElementById("setup-result"), false, message);
+    }
+
+    document.getElementById("daily-input-editor").value = pretty(dailySample);
+    document.getElementById("setup-editor").value = pretty(setupSample);
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const source = document.getElementById(button.getAttribute("data-copy"));
+        try {
+          await navigator.clipboard.writeText(source.textContent);
+          const original = button.textContent;
+          button.textContent = "Copie";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 900);
+        } catch (error) {
+          button.textContent = "Echec";
+          setTimeout(() => {
+            button.textContent = "Copier";
+          }, 900);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

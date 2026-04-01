@@ -1,0 +1,101 @@
+{
+  "registry_version": "selector-registry-v1",
+  "platforms": {
+    "linkedin": {
+      "compose_url": "https://www.linkedin.com/preload/sharebox/",
+      "composer_patterns": [
+        ["textbox", "post text"],
+        ["textbox", "text editor"],
+        ["start a post"],
+        ["textbox"]
+      ],
+      "submit_patterns": [
+        ["button", "post"],
+        ["button", "publish"],
+        ["button", "share"]
+      ],
+      "media_patterns": [
+        ["button", "media"],
+        ["button", "photo"],
+        ["button", "image"]
+      ],
+      "success_texts": [
+        "post shared",
+        "your post is now live",
+        "posted successfully",
+        "successfully posted",
+        "post successful",
+        "view post"
+      ],
+      "file_input_selector": "input[type=file]"
+    },
+    "facebook": {
+      "compose_url": "https://www.facebook.com/",
+      "composer_patterns": [
+        ["button", "create a post"],
+        ["button", "cr\u00e9er une publication"],
+        ["button", "quoi de neuf"],
+        ["button", "what's on your mind"],
+        ["button", "what's up"],
+        ["button", "write something"],
+        ["region", "create a post"],
+        ["region", "cr\u00e9er une publication"],
+        ["textbox", "mind"],
+        ["textbox", "quoi de neuf"],
+        ["textbox", "write"],
+        ["textarea"],
+        ["textbox"]
+      ],
+      "submit_patterns": [
+        ["button", "post"],
+        ["button", "publier"],
+        ["button", "poster"],
+        ["button", "publish"],
+        ["button", "share"]
+      ],
+      "media_patterns": [
+        ["button", "photo/vid\u00e9o"],
+        ["button", "photo/video"],
+        ["button", "photo"],
+        ["button", "image"],
+        ["button", "media"]
+      ],
+      "success_texts": [
+        "your post is now published",
+        "posted to your profile",
+        "post published",
+        "posted successfully",
+        "publication",
+        "publi\u00e9e",
+        "publi\u00e9"
+      ],
+      "file_input_selector": "input[type=file]"
+    },
+    "x": {
+      "compose_url": "https://x.com/compose/post",
+      "composer_patterns": [
+        ["textbox", "what's happening"],
+        ["textbox", "post text"],
+        ["textbox", "compose"],
+        ["textbox"]
+      ],
+      "submit_patterns": [
+        ["button", "post"],
+        ["button", "tweet"],
+        ["button", "publish"]
+      ],
+      "media_patterns": [
+        ["button", "media"],
+        ["button", "photo"],
+        ["button", "image"]
+      ],
+      "success_texts": [
+        "your post was sent",
+        "posted successfully",
+        "post published",
+        "successfully posted"
+      ],
+      "file_input_selector": "input[type=file]"
+    }
+  }
+}
